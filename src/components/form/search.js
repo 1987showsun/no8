@@ -33,8 +33,8 @@ export default ({ handlePopup, handleForm }) => {
     const handleSubmit = e => {
         e.preventDefault();
         const filterNullForm = clearNullForm(form);
-        handleForm(filterNullForm);
         if( filterNullForm.indexOf('query')>-1 ){
+            handleForm(filterNullForm);
             handlePopup(true);
         }
     }

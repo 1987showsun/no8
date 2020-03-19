@@ -34,24 +34,41 @@ export const REMERGE_DATA = ( query="", data=[] ) => {
     const { searchType } = queryObject;
 
     return data.map((item, i) => {
-        switch( searchType) {
-            case 'photos':
-                return {
-                    id    : item['id'],
-                    name  : item['alt_description'],
-                    cover : item['urls']['thumb'],
-                    type  : searchType
-                }
-                break;
 
-            default :
-                return{
-                    id    : item['id'],
-                    name  : item['name'],
-                    cover : item['profile_image']['large'],
-                    type  : searchType
-                }
-                break;
+        if( searchType=="photos" || query.indexOf('query')==-1 ){
+            return {
+                id    : item['id'],
+                name  : item['alt_description'],
+                cover : item['urls']['thumb'],
+                type  : searchType
+            }
+        }else{
+            return{
+                id    : item['id'],
+                name  : item['name'],
+                cover : item['profile_image']['large'],
+                type  : searchType
+            }
         }
+
+        // switch( searchType) {
+        //     case 'photos':
+        //         return {
+        //             id    : item['id'],
+        //             name  : item['alt_description'],
+        //             cover : item['urls']['thumb'],
+        //             type  : searchType
+        //         }
+        //         break;
+
+        //     default :
+        //         return{
+        //             id    : item['id'],
+        //             name  : item['name'],
+        //             cover : item['profile_image']['large'],
+        //             type  : searchType
+        //         }
+        //         break;
+        // }
     })
 }
