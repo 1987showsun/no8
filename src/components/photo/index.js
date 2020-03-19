@@ -16,11 +16,11 @@ import './style.scss';
 export default ({ query="", data=[], loading=false, handleCurrentIndex }) => {
 
     const queryToObject = queryString.parse(query);
-    const { orientation="" } = queryToObject;
+    const { orientation="", searchType="photos" } = queryToObject;
 
     return( 
         <div className="unit-row">
-            <div className="photo-wrap" data-center={loading}>
+            <div className={`photo-wrap ${searchType}`} data-center={loading}>
                 {   
                     data.length>0? (
                         data.map((item,i) => {

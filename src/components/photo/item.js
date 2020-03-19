@@ -9,8 +9,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 export default (props) => {
     
     const block = useRef(null);
-    const { id, alt_description, urls, links, width, height, orientation } = props;
-    const { raw, full, regular, small, thumb } = urls;
+    const { name, cover, type, orientation } = props;
     const [ blockHeight, setHeight ] = useState(100);
 
     useEffect(()=>{
@@ -18,19 +17,23 @@ export default (props) => {
             if( !props.loading ){
                 const current = block.current;
                 const block_w = $(current).width();
-                switch( orientation ){
-                    case 'portrait':
-                        setHeight( block_w*(6/5) );     
-                        break;
+                if( type=='photos' ){
+                    switch( orientation ){
+                        case 'portrait':
+                            setHeight( block_w*(6/5) );     
+                            break;
 
-                    case 'squarish':
-                        setHeight( block_w );
-                        break;
+                        case 'squarish':
+                            setHeight( block_w );
+                            break;
 
-                    default:
-                        setHeight( block_w/(16/9) ); 
-                        break;
-                } 
+                        default:
+                            setHeight( block_w/(16/9) ); 
+                            break;
+                    } 
+                }else{
+                    setHeight( block_w );
+                }
             }
         }
 
@@ -48,14 +51,14 @@ export default (props) => {
             <figure>
                 <div ref={block} className="img" style={{height: `${blockHeight}px`}}>
                     <LazyLoadImage
-                        src     = {thumb}
-                        alt     = {alt_description}
-                        title   = {alt_description}
+                        src     = {cover}
+                        alt     = {name}
+                        title   = {name}
                         effect  = "blur"
                     />
                 </div>
                 <figcaption>
-                    <h3>{alt_description}</h3>
+                    <h3>{name}</h3>
                 </figcaption>
             </figure>
         </div>

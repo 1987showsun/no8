@@ -4,6 +4,7 @@
  */
 
 import React,{ useState, useEffect }       from 'react';
+import queryString                         from 'query-string';
 import ReactDOM                            from 'react-dom';
 import Lightbox from 'react-image-lightbox';
 
@@ -15,7 +16,7 @@ import Pagination                          from './components/pagination';
 import Footer                              from './components/common/footer';
 
 // Actions
-import { SIM_CALL_API }                    from './actions/imageAPI';
+import { SIM_CALL_API, REMERGE_DATA }      from './actions/imageAPI';
 
 // stylesheets
 import './public/stylesheets/style.scss';
@@ -32,24 +33,31 @@ const Index = () => {
   const [ dialogSwitch   , setDialogSwitch    ] = useState(false);
   const [ loading        , setLoading         ] = useState(false);
 
-  useEffect(()=> {    
+  useEffect(()=> {
     if( query!='' ){
       setLoading( true );
       SIM_CALL_API({ query, current }).then( res => {
         const { data, PATH_KEY } = res;
         switch(PATH_KEY){
           case 'nomal':
-            setData(data);
+            setData( REMERGE_DATA(query, data) );
             setOther({ total: 16000 , total_pages: 4000 });
             setLightboxImage(data.map( item => item['urls']['regular']));
             break;
 
           default:
-            const total       = data['total']!=0? data['total']: 1;
-            const total_pages = data['total_pages']!=0? data['total_pages'] : 1;
-            setData(data['results']);
+            const queryObject    = queryString.parse(query);
+            const { searchType } = queryObject;
+            const total          = data['total']!=0? data['total']: 1;
+            const total_pages    = data['total_pages']!=0? data['total_pages'] : 1;
+            
+            if( searchType=='photos' ){
+              setLightboxImage(data['results'].map( item => item['urls']['regular']));
+            }else{
+              setLightboxImage(data['results'].map( item => item['profile_image']['large']));
+            }
+            setData( REMERGE_DATA(query, data['results']) );
             setOther({ total, total_pages });
-            setLightboxImage(data['results'].map( item => item['urls']['regular']));
             if( current>total_pages ){
               setCurrent( total_pages );
             }

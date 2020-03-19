@@ -10,6 +10,7 @@ import { Button, TextField, Select, MenuItem }             from '@material-ui/co
 export default ({ handlePopup, handleForm }) => {
     const [ form, setForm ] = useState({
         query       : '',
+        searchType  : 'photos',
         orientation : '',
         per_page    : 15
     });
@@ -46,7 +47,7 @@ export default ({ handlePopup, handleForm }) => {
         handleForm(clearNullForm(form));
     },[form['per_page'],form['orientation']]);
 
-    const { query, per_page, orientation } = form;
+    const { query, searchType, per_page, orientation } = form;
 
     return(
         <div className="unit-row unit-head" data-fixed="true">
@@ -54,6 +55,12 @@ export default ({ handlePopup, handleForm }) => {
                 <ul>
                     <li>
                         <TextField type="text"   name="query" value={query} onChange={handleChange.bind(this)} placeholder="搜尋關鍵字"/>
+                    </li>
+                    <li>
+                        <Select name="searchType" value={searchType} onChange={handleChange.bind(this)}>
+                            <MenuItem value="photos">Photo</MenuItem>
+                            <MenuItem value="users">user</MenuItem>
+                        </Select>
                     </li>
                     <li>
                         <Button type="submit" variant="contained" color="primary">搜尋</Button>
@@ -70,7 +77,7 @@ export default ({ handlePopup, handleForm }) => {
                         </Select>
                     </li>
                     {
-                        query!='' &&
+                        query!='' && searchType!='users'?(
                             <li>
                                 <label>圖片方向</label>
                                 <Select name="orientation" value={orientation} displayEmpty onChange={handleChange.bind(this)} className="MuiInput-unline">
@@ -80,6 +87,7 @@ export default ({ handlePopup, handleForm }) => {
                                     <MenuItem value="squarish">方形</MenuItem>
                                 </Select>
                             </li>
+                        ):(null)
                     }
                 </ul>
             </form>
