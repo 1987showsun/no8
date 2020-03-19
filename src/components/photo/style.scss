@@ -1,0 +1,89 @@
+.photo-wrap{
+    width          : 100%;
+    min-height     : 100px;
+    display        : flex;
+    flex-wrap      : wrap;
+    position       : relative;
+    padding        : 5px;
+    .no-data{
+        width                 : 100%;
+        height                : 100%;
+        display               : flex;
+        justify-content       : center;
+        align-items           : center;
+    }
+    .photo-item{
+        width                 : 20%;
+        display               : inline-flex;
+        padding               : 5px;
+        transition            : opacity .3s;
+        @media (max-width: 1380px) and (min-width: 1025px) {
+            width                 : 25%;
+        }
+        @media (max-width: 1024px) and (min-width: 721px) {
+            width                 : 33.333%;
+        }
+        @media (max-width: 720px) {
+            width                 : 50%;
+        }
+    }
+    figure{
+        width                 : 100%;
+        display               : flex;
+        flex-direction        : column;
+        justify-content       : space-between;
+        position              : relative;
+        background            : #ccc;
+        .img{
+            width                 : 100%;
+            height                : 0px;
+            overflow              : hidden;
+            transition            : height .4s;
+            cursor                : pointer;
+            img{
+                width: 100%;
+                display: block;
+            }
+            .lazy-load-image-loaded{
+                width: 100%;
+            }
+        }
+        
+        figcaption{
+            width             : 100%;
+            height            : 50px;
+            padding           : 5px;
+            position          : absolute;
+            z-index           : 2;
+            bottom            : 0px;
+            color             : #fff;
+            background-color  : rgba(0,0,0,.5);
+            h3{
+                font-size         : 0.9rem;
+                overflow          : hidden;
+                text-overflow     : ellipsis;
+                white-space       : normal;
+                -webkit-box-orient: vertical;
+                display           : -webkit-box;
+                -webkit-line-clamp: 2;
+                font-weight       : 300;
+            }
+        }
+    }
+    [data-center=true]{
+        justify-content: center;
+    }
+    .test{
+        position         : absolute;
+        z-index          : 10;
+        background-color : rgba(255,255,255,.5);
+    }
+    &:hover{
+        .photo-item{
+            opacity: 0.5;
+            &:hover{
+                opacity: 1;
+            }
+        }
+    }
+}
