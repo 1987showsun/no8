@@ -8,10 +8,10 @@ npm start
 npm run build
 ```
 ## 功能介紹
-> Images search
-> 搜尋後彈跳視窗提示搜尋關鍵字
-> 新增篩選
->> 單頁顯示數量
->> 圖片方向
-> 突和燈片效果
-> Users search
+* Images search
+* 搜尋後彈跳視窗提示搜尋關鍵字
+* 新增篩選
+ * 單頁顯示數量
+ * 圖片方向
+* 突和燈片效果
+* Users search
